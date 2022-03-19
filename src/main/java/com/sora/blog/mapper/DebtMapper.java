@@ -23,5 +23,5 @@ public interface DebtMapper {
     @Select("select debt from blog.t_debt where user_debtor_id = #{userId}")
     String getDebtByUserId(@Param("userId") Long userId);
 
-    int updateByUserId(Debt debt);
+    void updateByUserId(Debt debt);
 }
