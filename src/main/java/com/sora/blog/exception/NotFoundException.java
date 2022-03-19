@@ -1,0 +1,24 @@
+package com.sora.blog.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+/**
+ * @Author Sora Chen
+ * @Date 2022/1/31 21:08
+ * @Version 1.0
+ */
+
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class NotFoundException extends RuntimeException{
+    public NotFoundException() {
+    }
+
+    public NotFoundException(String message) {
+        super(message);
+    }
+
+    public NotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}

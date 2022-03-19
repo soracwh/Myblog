@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=" name="viewport">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/static/css/me.css}">
+<!--    动画效果-->
+    <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+    <script src="https://lib.baomitu.com/jquery/3.3.1/jquery.min.js"></script>
+    <title>SoraChen的小屋</title>
+</head>
+<body>
+<!--导航-->
+<nav th:replace="_fragment :: menu(1)" class="ui inverted attached segment m-padded-tb-mini blog-nav" >
+    <div class="ui sticky">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <h2 class="ui header item" style="color: gold">Sora</h2>
+                <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>首页</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="clone icon"></i>归档</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="linkify icon"></i>小程序</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>关于本站</a>
+                <div class="m-item right item m-mobile-hide m-input">
+                    <form name="search" method="post" th:action="@{/search}" target="_blank">
+                        <div class="ui icon input" >
+                            <input type="text" name="query" placeholder="Searching...." th:value="${query}">
+                            <i onclick="document.forms['search'].submit()" class="search link icon"></i>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+            <i class="sidebar icon"></i>
+        </a>
+    </div>
+</nav>
+<!--中间内容-->
+<div class="blog-body">
+        <!--    #393D49-->
+        <canvas id="canvas-banner" style="background: #393D49;" width="1158" height="250"></canvas>
+        <script>
+            var canvas = document.getElementById('canvas-banner');
+            canvas.width = window.document.body.clientWidth - 10;//减去滚动条的宽度
+            if (screen.width >= 992) {
+                canvas.height = window.innerHeight * 1 / 3;
+            } else {
+                canvas.height = window.innerHeight * 2 / 7;
+            }
+        </script>
+        <!--    容器，能够自适应屏幕大小-->
+        <div class="m-padded-tb-large m-container">
+            <div class="ui container ">
+                <div class="ui success mini message" th:unless="${#strings.isEmpty(message)}">
+                    <i class="close icon"></i>
+                    <div class="" th:text="|提示： ${message}">提示：操作成功！</div>
+                </div>
+                <!--                <div class="ui m-container-small m-opacity-mini">-->
+                <!--                    <div class="ui secondary segment " align="center">-->
+                <!--                        <i class="bookmark icon"></i>最新文章-->
+                <!--                    </div>-->
+                <!--                </div>-->
+                <!--            <br>-->
+
+                <div class="ui stackable grid">
+                    <!--  中间内容左边博客列表-->
+                    <div class="eleven wide column animated fadeInLeft">
+                        <!-- attached 头部网格与下一块中间无空格-->
+                        <div class="ui top attached segment">
+                            <div class="ui middle aligned two column grid">
+                                <div class="column">
+                                    <h3 class="ui teal header">博客</h3>
+                                </div>
+                                <div class="right aligned column">
+                                    共<h3 class="ui header m-inline-block"  style="color: gold" th:text="${total}">14</h3>篇
+                                </div>
+                            </div>
+                        </div>
+                        <!--     中间的内容-->
+                        <div class="ui attached segment m-padded-lr-big ">
+                            <!--   vertical 无边款模式,垂直模式-->
+                            <div class="ui vertical padded segment m-padded-tb-tb2" th:each="blog:${pageInfo.list}">
+                                <div class="ui middle aligned mobile reversed stackable grid" >
+                                    <div class="eleven wide column">
+                                        <h3 class="ui header" ><a href="" style="color: black" th:href="@{/blog/{id}(id=${blog.id})}" th:text="${blog.title}">继电保护故障分析</a></h3>
+                                        <p class="m-text" th:text="${blog.description}">研究电力系统故障和危及安全运行的异常工况，以探讨其对策的反事故自动化措施。因在其发展过程中曾主要用有触点的继电器来保护电力系统及其元件，使之免遭损害，所以也称继电保护。</p>
+                                        <div class="ui grid">
+                                            <div class="twelve wide column">
+                                                <div class="ui mini horizontal link list">
+                                                    <div class="item">
+                                                        <img src="https://picsum.photos/seed/picsum/100/100" th:src="${blog.userSearch.avatar}" alt="" class="ui avatar image">
+                                                        <div class="content">
+                                                            <a href="#" class="m-text-height" th:text="${blog.userSearch.username}">SoraChen</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item" >
+                                                        <i class="calendar icon" style="margin-bottom: 0.25em !important;"></i><span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm')}">2021-1-8</span>
+                                                    </div>
+                                                    <div class="item">
+                                                        <i class="eye icon" style="margin-bottom: 0.25em !important;"></i> <span th:text="${blog.views}">2656</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="four wide column center aligned">
+                                                <a href="#" target="_blank" class="ui label m-padded-tb-small" th:text="${blog.type.name}">认知升级</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="five wide column">
+                                        <a href="#" target="_blank" th:href="@{/blog/{id}(id=${blog.id})}">
+                                            <img src="https://picsum.photos/seed/picsum/800/450" alt="" class="ui rounded image" th:src="@{${blog.addPicture}}">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/*-->
+                            <div class="ui vertical padded segment m-padded-tb-tb2">
+                                <div class="ui mobile reversed stackable grid">
+                                    <div class="eleven wide column">
+                                        <h3 class="ui header">继电保护故障分析</h3>
+                                        <p class="m-text">研究电力系统故障和危及安全运行的异常工况，以探讨其对策的反事故自动化措施。因在其发展过程中曾主要用有触点的继电器来保护电力系统及其元件，使之免遭损害，所以也称继电保护。</p>
+                                        <div class="ui grid">
+                                            <div class="twelve wide column">
+                                                <div class="ui mini horizontal link list">
+                                                    <div class="item">
+                                                        <img src="https://picsum.photos/seed/picsum/100/100" alt="" class="ui avatar image">
+                                                        <div class="content">
+                                                            <a href="#" class="m-text-height">SoraChen</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <i class="calendar icon"></i>2021-1-8
+                                                    </div>
+                                                    <div class="item">
+                                                        <i class="eye icon"></i>2656
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="four wide column">
+                                                <a href="#" target="_blank" class="ui label m-padded-tb-small">认知升级</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="five wide column">
+                                        <a href="#" target="_blank">
+                                            <img src="https://picsum.photos/seed/picsum/800/450" alt="" class="ui rounded image">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--*/-->
+
+                        </div>
+
+                        <!-- 底部-->
+                        <div class="ui bottom attached segment">
+                            <div class="ui middle aligned three column grid">
+                                <!--左对齐右对齐-->
+                                <div class="column m-padded-lr-big">
+                                    <a href="#" class="ui labeled icon button" th:href="@{/(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}" th:styleappend="${pageInfo.isFirstPage}?'pointer-events: none;'"><i class="left arrow icon"></i>上一页</a>
+                                </div>
+                                <div class="center aligned column">
+                                   <p th:text="${pageInfo.pageNum}">1</p>
+                                </div>
+                                <div class="right aligned column m-padded-lr-big">
+                                    <a href="#" class="ui right labeled icon button" th:href="@{/(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pageNum})}" th:styleappend="${pageInfo.isLastPage}?'pointer-events: none;'"><i class="right arrow icon"></i>下一页</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  右边内容-->
+                    <div class="five wide column animated lightSpeedIn">
+                        <!--  个人介绍-->
+                        <div class="ui tall stacked segment">
+                            <img src="../static/image/person.jpg" alt="" class="ui circular image m-blog-figure">
+                            <p class="m-nickname">Sora·CHEN</p>
+                            <p class="m-introduce">不念过去，不畏将来，只争朝夕</p>
+                            <p class="m-position"><i class="paper plane icon"></i>浙江-温州</p>
+                            <hr>
+                            <div class="ui center aligned container">
+                                <div class="m-margin-top-tb m-padded-lr-large">
+                                    <a href="#" class="ui circular icon button m-margin-lr-small" id="wechat"><i class="large weixin icon"></i></a>
+                                    <a href="#" class="ui circular icon button m-margin-lr-small" data-title="QQ" data-tooltip="QQ:765961732"><i class="large qq icon"></i></a>
+                                    <a href="#" class="ui circular icon button m-margin-lr-small"><i class="large github icon" ></i></a>
+                                </div>
+                                <!--定义弹出窗口 -->
+                                <div class="ui weichat-qr flowing popup bottom left transition hidden">
+                                    <img src="../static/image/wechat.jpg" class="ui rounded image" style="width: 120px;height: 120px;">
+                                </div>
+                            </div>
+                        </div>
+                        <!--   分类-->
+                        <div class="ui raised segments m-margin-top-large">
+                            <div class="ui secondary segment">
+                                <div class="ui two column grid">
+                                    <div class="column">
+                                        <i class="idea icon"></i>分类
+                                    </div>
+                                    <div class="right aligned column">
+                                        <a href="#" class="m-text-color">more<i class="arrow circle right icon"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ui segment m-segment-line">
+                                <div class="ui fluid vertical menu">
+                                    <a class=" item" th:each="type:${types}" th:href="@{/types/{id}(id=${type.id})}">
+                                        <span th:text="${type.name}">Inbox</span>
+                                        <div class="ui label" th:text="${type.blogNum}">1</div>
+                                    </a>
+                                    <!--/*-->
+                                    <a class="item">
+                                        Spam
+                                        <div class="ui label">51</div>
+                                    </a>
+                                    <a class="item">
+                                        Updates
+                                        <div class="ui label">1</div>
+                                    </a>
+                                    <a class="item">
+                                        Updates
+                                        <div class="ui label">1</div>
+                                    </a>
+                                    <!--*/-->
+                                </div>
+                                <!--                            fluid填充外层容器,二级菜单-->
+<!--                                <div class="ui fluid vertical menu ">-->
+<!--                                    <div class="item">-->
+<!--                                        <div class="header">Products</div>-->
+<!--                                        <div class="menu">-->
+<!--                                            <a href="#" class="item">Enterprise <div class="ui mini label m-label"><p class="m-text-size-small m-text-thin">13</p></div></a>-->
+<!--                                            <a href="#" class="item">消费者<div class="ui mini label m-label"><p class="m-text-size-small m-text-thin">13</p></div></a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="item">-->
+<!--                                        <div class="header">CMS Solutions</div>-->
+<!--                                        <div class="menu">-->
+<!--                                            <a href="#" class="item">Rails<div class="ui mini label m-label"><p class="m-text-size-small m-text-thin">13</p></div></a>-->
+<!--                                            <a href="#" class="item">Python<div class="ui mini label m-label"><p class="m-text-size-small m-text-thin">13</p></div></a>-->
+<!--                                            <a href="#" class="item">PHP<div class="ui mini label m-label"><p class="m-text-size-small m-text-thin">13</p></div></a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="item">-->
+<!--                                        <div class="header">Hosting</div>-->
+<!--                                        <div class="menu">-->
+<!--                                            <a href="#" class="item">已分享<div class="ui mini label m-label"><p class="m-text-size-small m-text-thin">13</p></div></a>-->
+<!--                                            <a href="#" class="item">专用的<div class="ui mini label m-label"><p class="m-text-size-small m-text-thin">13</p></div></a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                        &lt;!&ndash;                                <a href="#" class="item">学习日志&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                    <div class="ui teal basic label">13</div>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                </a>&ndash;&gt;-->
+<!--                                </div>-->
+                            </div>
+                        </div>
+                        <!-- 标签-->
+                        <div class="ui raised segments m-margin-top-large">
+                            <div class="ui secondary segment">
+                                <div class="ui two column grid">
+                                    <div class="column">
+                                        <i class="tags icon"></i>标签
+                                    </div>
+                                    <div class="right aligned column">
+                                        <a href="#" class="m-text-color">more<i class="arrow circle right icon"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui segment m-segment-line">
+                                <!--                            margin和padded一个是对外部间隔，一个是对内部间隔-->
+                                <a href="#" target="_blank" class="ui label m-margin-tb-tiny" th:each="tag:${tags}" th:href="@{/tags/{id}(id=${tag.id})}">
+                                    <span th:text="${tag.name}">方法论</span><div class="detail" th:text="${tag.blogNum}">20</div>
+                                </a>
+                                <!--/*-->
+                                <a href="#" target="_blank" class="ui label m-margin-tb-tiny">方法论</a>
+                                <a href="#" target="_blank" class="ui label m-margin-tb-tiny">方法论</a>
+                                <a href="#" target="_blank" class="ui label m-margin-tb-tiny">方法论</a>
+                                <a href="#" target="_blank" class="ui label m-margin-tb-tiny">方法论</a>
+                                <!--*/-->
+
+                            </div>
+                        </div>
+                        <!--  最新推荐,segments可以让多个分段中间不隔开-->
+                        <div class="ui raised segments m-margin-top-large">
+                            <div class="ui secondary segment">
+                                <div class="ui two column grid">
+                                    <div class="column">
+                                        <i class="bookmark icon"></i>最新推荐
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui m-segment-line segment">
+                                <!--                            secondary 边界透明-->
+                                <div class="ui secondary vertical fluid menu">
+                                    <a href="#" target="_blank" class="item" th:each="simpleBlog:${simpleBlog}" th:text="${simpleBlog.title}">用户故事</a>
+                                    <!--/*-->
+                                    <a href="#" target="_blank" class="item">用户故事</a>
+                                    <a href="#" target="_blank" class="item">用户故事</a>
+                                    <a href="#" target="_blank" class="item">用户故事</a>
+                                    <a href="#" target="_blank" class="item">用户故事</a>
+                                    <!--*/-->
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--                        扫码关注-->
+<!--                        <h4 class="ui horizontal divider header">扫码关注我</h4>-->
+<!--                        <div class="ui centered card" style="width: 11em">-->
+<!--                            <img src="./Static/image/wechat.jpg" alt="" class="ui rounded image">-->
+<!--                        </div>-->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+<!--底部-->
+<footer th:replace="_fragment :: foot" class="ui inverted vertical segment m-padded-tb-blogFooter" style="background-color: #393D49">
+    <div class="ui center aligned container">
+<!--        分块，16份-->
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="../static/image/wechat.jpg" class="ui rounded image" alt="" style="width: 110px">
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                <div class="ui inverted link list">
+                    <a href="#" target="_blank" class="item" th:each="simpleBlog:${simpleBlog}" th:text="${simpleBlog.title}">用户故事</a>
+                    <!--/*-->
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                    <!--*/-->
+                </div>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Email：sorachenwh@hotmai.com</a>
+                    <a href="#" class="item">QQ:765961732</a>
+                </div>
+            </div>
+            <div class="six wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">这是我的个人博客</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider m-margin-tb-blogFooterLine"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-mini">Copyright@2022-2023 Sora designed by Sorachen</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script src="../static/js/home.js" th:src="@{/static/js/home.js}"></script>
+<!--按钮后出现m-item标签-->
+<script>
+     $('.menu.toggle').click(function () {
+         $('.m-item').toggleClass('m-mobile-hide');
+    });
+     $('#wechat').popup({
+         popup : $('.weichat-qr.popup'),
+         on : 'hover',
+         position : 'bottom center',
+     });
+     document.documentElement.style.setProperty('--animate-duration', '1.5s');
+     DrawCanvas();
+
+     $('.ui.dropdown')
+         .dropdown()
+     ;
+     $('#login').click(function (){
+         $('#login_form').css({"visibility":"visible","width":"300px"});
+     });
+     $('#close_login').click(function (){
+         $('#login_form').css("visibility","hidden");
+     });
+
+     $('.LoginForm').form({
+         fields: {
+             username: {
+                 identifier: 'username',
+                 rules: [{
+                     type: 'empty',
+                     prompt: '请输入用户名'
+                 }]
+             },
+             password: {
+                 identifier: 'password',
+                 rules: [{
+                     type: 'empty',
+                     prompt: '请输入密码'
+                 }]
+             },
+         }
+     });
+
+     $('.message .close').on('click', function () {
+         $(this)
+             .closest('.message')
+             .transition('fade');
+     });
+</script>
+
+</body>
+</html>

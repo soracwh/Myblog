@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=" name="viewport">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/static/css/me.css}">
+<!--    动画效果-->
+    <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+    <script src="https://lib.baomitu.com/jquery/3.3.1/jquery.min.js"></script>
+    <title>关于本站页面</title>
+</head>
+<body>
+<!--导航-->
+<nav th:replace="_fragment :: menu(2)" class="ui inverted attached segment m-padded-tb-mini blog-nav" >
+    <div class="ui sticky">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <h2 class="ui header item" style="color: gold">Sora</h2>
+                <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>首页</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="clone icon"></i>归档</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="linkify icon"></i>小程序</a>
+                <a href="#" class="active m-item item m-mobile-hide"><i class="info icon"></i>关于本站</a>
+                <div class="m-item right item m-mobile-hide m-input">
+                    <div class="ui icon input">
+                        <input type="text" placeholder="Searching....">
+                        <i class="search icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+            <i class="sidebar icon"></i>
+        </a>
+    </div>
+
+</nav>
+<!--中间内容-->
+
+<div class="blog-body">
+    <div class="m-container-tiny m-padded-tb-big">
+        <div class="ui container">
+            <div class="ui teal top attached pointing large menu m-menu-color m-padded-lr-menu">
+                <a class="item active m-text-menu" data-tab="first">关于作者</a>
+                <a class="item m-text-menu" data-tab="second">关于博客</a>
+                <a class="item m-text-menu" data-tab="third">留言墙</a>
+            </div>
+            <div class="ui bottom attached tab segment active" data-tab="first">
+                <!--text-aligned可以为文字和内联元素、行内块设置水平居中，即使该文字是在块元素内。图片变为block块元素不居中-->
+                <div class="ui center aligned basic segment" style="text-align: center">
+                    <img src="../static/image/person.jpg" class="ui circular image m-person-introduction" alt="">
+                    <p class="m-nickname-about ">Sora·CHEN</p>
+                    <p class="m-introduce-about ">一位社畜电气攻城狮，编程只是爱好，无聊的时候用于消遣。</p>
+                    <p class="m-position-about"><i class="paper plane icon"></i>浙江-温州</p>
+                    <div class="ui divider"></div>
+                    <div class="m-margin-top-tb m-padded-lr-large">
+                        <a href="#" class="ui circular icon button m-margin-lr-small" id="wechat"><i class="large weixin icon"></i></a>
+                        <a href="#" class="ui circular icon button m-margin-lr-small" data-title="QQ" data-tooltip="QQ:765961732"><i class="large qq icon"></i></a>
+                        <a href="#" class="ui circular icon button m-margin-lr-small"><i class="large github icon" ></i></a>
+                    </div>
+                    <div class="ui weichat-qr flowing popup bottom left transition hidden">
+                        <img src="../static/image/wechat.jpg" class="ui rounded image" style="width: 120px;height: 120px;">
+                    </div>
+                    <div class="ui horizontal divider m-padded-tb-small"><p style="font-size: 18px;font-weight: 500">个人 简介</p></div>
+                    <p style="text-align:center;">Life becomes a lot more fun when you know that it is meaningless. Just enjoy today as a present.</p>
+                    <div class="ui header" style="text-align: left">个人信息</div>
+                    <p style="text-align: left;text-indent:40px;">出生于浙江，96年大叔，现居温州。21年ZJU·EE硕士毕业，现为SGCC底层员工。</p>
+                    <div class="ui header" style="text-align: left">个人介绍</div>
+                    <p style="text-align: left;text-indent:40px;">真正的大师，永远有着一颗学徒般的心。工作内容是继电保护,虽然主业和编程没有半毛钱关系，但是人生本来就很无聊了，总得做些什么留点记录吧。本站不仅更新自己在编程方面的学习，以后也会更新跟鸡煲有关的知识。</p>
+                    <div class="ui header" style="text-align: center">END</div>
+                </div>
+            </div>
+            <div class="ui bottom attached tab segment" data-tab="second">
+                <div class="ui center aligned basic segment" style="text-align: center">
+                    <img src="../static/image/person.jpg" class="ui circular image m-person-introduction" alt="">
+                    <p class="m-nickname-about ">Sora</p>
+                    <p class="m-introduce-about ">工作闲暇之余做的一个记录自己学习过程的博客。 </p>
+                    <p class="m-position-about"><i class="paper plane icon"></i>浙江-温州</p>
+                    <div class="ui horizontal divider m-padded-tb-small"><p style="font-size: 18px;font-weight: 500">博客 简介</p></div>
+                    <p style="text-align:center;">Sora来源于穹妹的名字，懂的都懂，穹妹一生推！！！</p>
+                    <div class="ui header" style="text-align: left">个人信息</div>
+                    <p style="text-align: left;text-indent:40px;">出生于浙江，96年大叔，现居温州。21年ZJU·EE硕士毕业，现为SGCC底层员工。</p>
+                    <div class="ui header" style="text-align: left">个人介绍</div>
+                    <p style="text-align: left;text-indent:40px;">真正的大师，永远有着一颗学徒般的心。工作内容是继电保护,虽然主业和编程没有半毛钱关系，但是人生本来就很无聊了，总得做些什么留点记录吧。本站不仅更新自己在编程方面的学习，以后也会更新跟鸡煲有关的知识。</p>
+                    <div class="ui header" style="text-align: center">END</div>
+            </div>
+            </div>
+            <div class="ui bottom attached tab segment" data-tab="third">
+                <div class="ui basic segment" style="text-align: center;margin-bottom: 0em">
+                    <img src="../static/image/messagewall.png" alt="" class="ui circular image m-message">
+                    <p class="m-nickname-about ">留言墙</p>
+                    <p class="m-introduce-about ">本页面可留言、吐槽、提问。欢迎灌水，杜绝广告！</p>
+                    <!--用span可以让他处在同一行-->
+                    <div><i class="clock icon"></i><span id="showtime"></span></div>
+                    <div class="divider"></div>
+                    <div class="ui divider"></div>
+                    <p class="m-nickname-message">欢迎各位小伙伴留言</p>
+                    <div class="ui horizontal divider m-padded-tb-small"><p style="font-size: 16px;font-weight: 400">message board</p></div>
+                </div>
+                <div class="ui vertical segment m-margin-lr-large">
+                    <div class="ui minimal comments">
+                        <h3 class="ui dividing header">Message</h3>
+                        <div class="comment">
+                            <a class="avatar">
+                                <img src="../static/image/person.jpg">
+                            </a>
+                            <div class="content">
+                                <a class="author">Matt</a>
+                                <div class="metadata">
+                                    <span class="date">今天下午 5:42</span>
+                                </div>
+                                <div class="text">太赞了！ </div>
+                                <div class="actions">
+                                    <a class="reply">评论</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <a class="avatar">
+                                <img src="../static/image/person.jpg">
+                            </a>
+                            <div class="content">
+                                <a class="author">Elliot Fu</a>
+                                <div class="metadata">
+                                    <span class="date">昨天上午12:30</span>
+                                </div>
+                                <div class="text">
+                                    <p>這對我的研究是非常有用.謝謝!</p>
+                                </div>
+                                <div class="actions">
+                                    <a class="reply">评论</a>
+                                </div>
+                            </div>
+                            <div class="comments">
+                                <div class="comment">
+                                    <a class="avatar">
+                                        <img src="../static/image/person.jpg">
+                                    </a>
+                                    <div class="content">
+                                        <a class="author">Jenny Hess</a>
+                                        <div class="metadata">
+                                            <span class="date">刚刚</span>
+                                        </div>
+                                        <div class="text">艾略特你永远是多么正确 :) </div>
+                                        <div class="actions">
+                                            <a class="reply">评论</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <a class="avatar">
+                                <img src="../static/image/person.jpg">
+                            </a>
+                            <div class="content">
+                                <a class="author">Joe Henderson</a>
+                                <div class="metadata">
+                                    <span class="date">5 天以前</span>
+                                </div>
+                                <div class="text">老兄，这太棒了。非常感谢。 </div>
+                                <div class="actions">
+                                    <a class="reply">评论</a>
+                                </div>
+                            </div>
+                        </div>
+                        <form class="ui reply form">
+                            <div class="field">
+                                <textarea name="content" placeholder="请输入评论信息"></textarea>
+                            </div>
+                            <div class="ui horizontal link list">
+                                <div class="item">
+                                    <div class="ui icon input">
+                                        <input type="text" placeholder="用户名">
+                                        <i class="user icon"></i>
+                                    </div>
+                                    <div class="ui icon input">
+                                        <input type="text" placeholder="邮箱">
+                                        <i class="mail icon"></i>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="ui labeled submit icon button m-mobile-wide">
+                                        <i class="icon edit"></i> 发表评论
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<!--底部-->
+<footer th:replace="_fragment :: foot" class="ui inverted vertical segment m-padded-tb-blogFooter" style="background-color: #393D49">
+    <div class="ui center aligned container">
+<!--        分块，16份-->
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="../static/image/wechat.jpg" class="ui rounded image" alt="" style="width: 110px">
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                </div>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Email：sorachenwh@hotmai.com</a>
+                    <a href="#" class="item">QQ:765961732</a>
+                </div>
+            </div>
+            <div class="six wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">这是我的个人博客</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider m-margin-tb-blogFooterLine"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-mini">Copyright@2022-2023 Sorachen designed by Sorachen</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<!--按钮后出现m-item标签-->
+<script>
+     $('.menu.toggle').click(function () {
+         $('.m-item').toggleClass('m-mobile-hide');
+    });
+     $('.menu .item')
+         .tab()
+     ;
+     $('#wechat').popup({
+         popup : $('.weichat-qr.popup'),
+         on : 'hover',
+         position : 'bottom center',
+     });
+     /*显示时间*/
+     function time() {
+         t_div = document.getElementById('showtime');
+         var now = new Date()
+         t_div.innerHTML = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + "-" + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds() + "";
+         setTimeout(time, 1000);
+     }
+     setInterval(function() {time()},1000);
+
+     $('.ui.dropdown')
+         .dropdown()
+     ;
+     document.documentElement.style.setProperty('--animate-duration', '1.5s');
+
+     $('#login').click(function (){
+         $('#login_form').css({"visibility":"visible","width":"300px"});
+     });
+     $('#close_login').click(function (){
+         $('#login_form').css("visibility","hidden");
+     });
+
+     $('.LoginForm').form({
+         fields: {
+             username: {
+                 identifier: 'username',
+                 rules: [{
+                     type: 'empty',
+                     prompt: '请输入用户名'
+                 }]
+             },
+             password: {
+                 identifier: 'password',
+                 rules: [{
+                     type: 'empty',
+                     prompt: '请输入密码'
+                 }]
+             },
+         }
+     });
+</script>
+
+</body>
+</html>

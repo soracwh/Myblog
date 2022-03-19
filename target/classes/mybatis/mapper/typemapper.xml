@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sora.blog.mapper.TypeMapper">
+
+    <!--查询所有分类-->
+    <select id="getAllType" resultType="Type">
+        select * from blog.t_type
+    </select>
+
+    <!--按name查询所有分类-->
+    <select id="getTypeByName" resultType="Type">
+        select * from blog.t_type where name = #{name}
+    </select>
+
+    <select id="getType" resultType="Type">
+        select * from blog.t_type where id = #{id}
+    </select>
+    <!--增-->
+    <insert id="insertName" parameterType="java.lang.String">
+        insert into blog.t_type (name) values (#{name});
+    </insert>
+
+    <delete id="deleteType">
+        delete from blog.t_type where id = #{id}
+    </delete>
+
+    <update id="updateType">
+        update blog.t_type set name = #{name} where id = #{id};
+    </update>
+
+<!--    查询某个type的blog数量-->
+    <select id="getIndexType" resultType="TypeSearch">
+        select t.name, t.id, count(b.id) blogNum from blog.t_blog b left join blog.t_type t on b.type_id = t.id group by t.id order by count(b.id) desc
+        <if test="num!=null">
+            limit #{num}
+        </if>
+    </select>
+
+
+</mapper>

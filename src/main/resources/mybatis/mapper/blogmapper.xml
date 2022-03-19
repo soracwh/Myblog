@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sora.blog.mapper.BlogMapper">
+
+    <!--查询所有分类-->
+    <select id="getAllBlog" resultMap="blogSim">
+            select b.id bid,b.title,b.update_time,b.recommend,b.type_id,t.id tid,t.name from blog.t_blog b left outer join
+            blog.t_type t on b.type_id = t.id order by b.update_time desc
+    </select>
+    <resultMap id="blogSim" type="BlogQuery">
+        <id property="id" column="bid" />
+        <result property="title" column="title"/>
+        <result property="updateTime" column="update_time" />
+        <result property="recommend" column="recommend" />
+        <result property="typeId" column="type_id"/>
+        <!--一对一，多对一选择association-->
+        <association property="type" javaType="Type">
+            <id property="id" column="tid"/>
+            <result property="name" column="name"/>
+        </association>
+    </resultMap>
+
+    <!--删除-->
+    <delete id="deleteBlog">
+        delete from blog.t_blog where id=#{id}
+    </delete>
+
+    <select id="getBlogById" resultMap="blogType">
+        select * from blog.t_blog where id=#{id};
+    </select>
+<!--嵌套sql，结果集映射-->
+    <resultMap id="blogType" type="Blog">
+        <id property="id" column="id" />
+        <result property="title" column="title"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createTime" column="create_time"/>
+        <result property="recommend" column="recommend"/>
+        <result property="addPicture" column="add_picture"/>
+        <result property="flag" column="flag"/>
+        <result property="views" column="views"/>
+        <result property="appreciation" column="appreciation"/>
+        <result property="shareStatement" column="share_statement"/>
+        <result property="commentable" column="commentable"/>
+        <result property="published" column="published"/>
+        <result property="content" column="content"/>
+        <result property="description" column="description"/>
+        <association property="type" column="type_id" javaType="Type" select="gettype"/>
+        <association property="user" column="user_id" javaType="User" select="getuser"/>
+    </resultMap>
+
+    <select id="gettype" resultType="Type">
+        select * from blog.t_type where id = #{type_id}
+    </select>
+    <select id="getuser" resultType="User">
+        select id,username,avatar,nickname from blog.t_user where id = #{user_id}
+    </select>
+
+
+
+    <select id="searchBlog" parameterType="map" resultMap="blogSim">
+        <bind name="pattern" value="'%' + title + '%'" />
+        select b.id bid,b.title,b.update_time,b.recommend,b.type_id,t.id tid,t.name from blog.t_blog b left join
+        blog.t_type t on (b.type_id = t.id)
+        <where>
+            <if test="title!=null">
+                and b.title like #{pattern}
+            </if>
+            <if test="type!=null">
+                and t.name=#{type}
+            </if>
+            <if test="recommend!=null">
+                and b.recommend=#{recommend}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertBlog" parameterType="Blog" useGeneratedKeys="true" keyProperty="id">
+        insert into blog.t_blog (id,title,content,add_picture,flag,views,appreciation,share_statement,
+        commentable,published,recommend,create_time,update_time,type_id,user_id,description) values
+        (#{id},#{title},#{content},#{addPicture},#{flag},#{views},#{appreciation},
+         #{shareStatement},#{commentable},#{published},#{recommend},#{createTime},#{updateTime},#{type.id},#{user.id},#{description})
+    </insert>
+
+    <update id="updateBlog" >
+        update blog.t_blog
+        <set>
+            <if test="blog.title!=null"> title = #{blog.title},</if>
+            <if test="blog.content!=null">content = #{blog.content},</if>
+            <if test="blog.addPicture!=null"> add_picture = #{blog.addPicture},</if>
+            <if test="blog.flag!=null"> flag = #{blog.flag}, </if>
+            <if test="blog.appreciation!=null">appreciation = #{blog.appreciation}, </if>
+            <if test="blog.shareStatement!=null"> share_statement = #{blog.shareStatement},</if>
+            <if test="blog.commentable!=null">commentable = #{blog.commentable},</if>
+            <if test="blog.published!=null">published = #{blog.published},</if>
+            <if test="blog.recommend!=null">recommend = #{blog.recommend},</if>
+            <if test="blog.updateTime!=null">update_time = #{blog.updateTime},</if>
+            <if test="blog.description!=null">description = #{blog.description},</if>
+            <if test="blog.type.id!=null">type_id = #{blog.type.id},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="blogForIndex" resultMap="indexBlog">
+        select id,title,description,type_id,add_picture,user_id, views,update_time from blog.t_blog
+        <if test="typeId!=null">
+            where type_id = #{typeId}
+        </if>
+        order by views desc
+    </select>
+    <resultMap id="indexBlog" type="BlogSearch">
+        <id property="id" column="id" />
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="addPicture" column="add_picture"/>
+        <result property="views" column="views"/>
+        <result property="updateTime" column="update_time"/>
+        <association property="type" column="type_id" javaType="Type" select="gettype"/>
+        <association property="userSearch" column="user_id" javaType="UserSearch" select="getuserindex"/>
+    </resultMap>
+    <select id="getuserindex" resultType="UserSearch">
+        select u.id,u.username,u.avatar from blog.t_user u where id = #{u.user_id}
+    </select>
+
+    <!--搜索博客-->
+    <select id="blogSearchForIndex" parameterType="String" resultMap="indexBlog">
+        <bind name="search" value="'%' + query + '%'" />
+        select id,title,description,type_id,add_picture,user_id, views,update_time from blog.t_blog where title like #{search} or description like #{search}
+    </select>
+
+    <select id="blogSearchForIndexTotal" parameterType="String" resultType="Integer">
+        <bind name="search" value="'%' + query + '%'" />
+        select count(id) from blog.t_blog where title like #{search} or description like #{search}
+    </select>
+
+    <!--根据tagId查询-->
+    <select id="blogForTagId" resultMap="tagBlog">
+        select * from blog.t_blog_tags bt left join blog.t_blog b on bt.blog_id=b.id where bt.tag_id = #{tagId}
+    </select>
+
+    <resultMap id="tagBlog" type="BlogSearch">
+        <id property="id" column="blog_id" />
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="addPicture" column="add_picture"/>
+        <result property="views" column="views"/>
+        <result property="updateTime" column="update_time"/>
+        <association property="type" column="type_id" javaType="Type" select="gettype"/>
+        <association property="userSearch" column="user_id" javaType="UserSearch" select="getuserindex"/>
+    </resultMap>
+
+    <select id="getByYear" resultMap="yearMap">
+        select b.id,b.title,b.flag,b.type_id,b.update_time from blog.t_blog b where date_format(b.update_time,'%Y') = #{year}
+    </select>
+    <resultMap id="yearMap" type="BlogQuery">
+        <id property="id" column="id" />
+        <result property="title" column="title"/>
+        <result property="flag" column="flag"/>
+        <result property="updateTime" column="update_time"/>
+        <association property="type" column="type_id" javaType="Type" select="gettype"/>
+    </resultMap>
+
+
+</mapper>

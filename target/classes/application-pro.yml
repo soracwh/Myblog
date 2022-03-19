@@ -1,0 +1,21 @@
+spring:
+  thymeleaf:
+    mode: HTML
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false&useAffectedRows=true
+    username: root
+    password: Soracwh?2948
+
+mybatis:
+  type-aliases-package: com.sora.blog.pojo
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+logging:
+  level:
+    root: warn
+    com.sora.blog: info
+  file:
+    path: log/blog.log
+server:
+  port: 8081

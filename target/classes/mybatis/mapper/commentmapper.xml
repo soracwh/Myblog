@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sora.blog.mapper.CommentMapper">
+
+    <insert id="insertComment" parameterType="Comment">
+        insert into blog.t_comment (nickname,email,content,avatar,create_time,blog_id,parent_comment_id,adminFlag)
+        values (#{nickname},#{email},#{content},#{avatar},#{createTime},#{blogId},#{parentId},#{adminFlag})
+    </insert>
+
+    <select id="getCommentsByBlogId" resultMap="comment">
+        select * from blog.t_comment where blog_id = #{blogId} order by create_time
+    </select>
+
+
+    <resultMap id="comment" type="Comment">
+        <result property="content" column="content"/>
+        <result property="id" column="id"/>
+        <result property="nickname" column="nickname"/>
+        <result property="email" column="email"/>
+        <result property="avatar" column="avatar"/>
+        <result property="adminFlag" column="adminFlag"/>
+        <result property="createTime" column="create_time"/>
+        <result property="blogId" column="blog_id"/>
+        <result property="parentId" column="parent_comment_id"/>
+        <association property="parentComment" column="parent_comment_id" javaType="Comment" select="parent"/>
+    </resultMap>
+
+    <!--父类只需要name和id-->
+    <select id="parent" resultType="Comment">
+        select * from blog.t_comment where id = #{parent_id}
+    </select>
+
+</mapper>

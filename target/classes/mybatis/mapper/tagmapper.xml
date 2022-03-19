@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sora.blog.mapper.TagMapper">
+
+    <!--查询所有分类-->
+    <select id="getAllTag" resultType="Tag">
+        select * from blog.t_tag
+    </select>
+    <delete id="deleteTag">
+        delete from blog.t_tag where id = #{id}
+    </delete>
+    <!--按name查询所有分类-->
+    <select id="getTagByName" resultType="Tag">
+        select * from blog.t_tag where name = #{name}
+    </select>
+
+    <insert id="insertByName" parameterType="java.lang.String">
+        insert into blog.t_tag (name) values (#{name});
+    </insert>
+
+    <select id="getTag" resultType="Tag">
+        select * from blog.t_tag where id = #{id}
+    </select>
+
+    <update id="updateTag">
+        update blog.t_tag set name = #{name} where id = #{id};
+    </update>
+
+    <!--某个tag的blog数量，嵌套查询-->
+    <select id="getIndexTag" resultMap="tagWithBlog">
+        select * from blog.t_tag;
+    </select>
+
+    <resultMap id="tagWithBlog" type="TagSearch">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <association property="blogNum" column="id" javaType="Integer" select="tagToBlog"/>
+    </resultMap>
+
+    <select id="tagToBlog" resultType="Integer">
+        select count(blog_id) from blog.t_blog_tags where tag_id = #{id}
+    </select>
+
+</mapper>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta content="width=" name="viewport">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css" th:href="@{/static/css/me.css}">
+    <!--    动画效果-->
+    <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+    <script src="https://lib.baomitu.com/jquery/3.3.1/jquery.min.js"></script>
+    <title>404</title>
+</head>
+<body>
+<nav th:replace="_fragment :: menu(0)" class="ui inverted attached segment m-padded-tb-mini blog-nav" >
+    <div class="ui sticky">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <h2 class="ui header item" style="color: gold">Sora</h2>
+                <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>首页</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="clone icon"></i>归档</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="linkify icon"></i>小程序</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>关于本站</a>
+                <div class="m-item right item m-mobile-hide">
+                    <div class="ui icon input">
+                        <input type="text" placeholder="Searching....">
+                        <i class="search icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+            <i class="sidebar icon"></i>
+        </a>
+    </div>
+</nav>
+
+<div class="ui container blog-body m-padded-tb-massive">
+    <div class="ui error message">
+        <h2>错误</h2>
+        <p>出错啦！</p>
+    </div>
+</div>
+<div>
+    <div th:utext="'&lt;!--'" th:remove="tag"></div>
+    <div th:utext="'Failed Request URL : ' + ${url}" th:remove="tag"></div>
+    <div th:utext="'Exception message : ' + ${exception.message}" th:remove="tag"></div>
+    <ul th:remove="tag">
+        <li th:each="st : ${exception.stackTrace}" th:remove="tag"><span th:utext="${st}" th:remove="tag"></span></li>
+    </ul>
+    <div th:utext="'--&gt;'" th:remove="tag"></div>
+</div>
+
+<!--底部-->
+<footer class="ui inverted vertical segment m-padded-tb-blogFooter" style="background-color: #393D49">
+    <div class="ui center aligned container">
+        <!--        分块，16份-->
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="../../static/image/wechat.jpg" class="ui rounded image" alt="" style="width: 110px">
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                </div>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Email：sorachenwh@hotmai.com</a>
+                    <a href="#" class="item">QQ:765961732</a>
+                </div>
+            </div>
+            <div class="six wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">这是我的个人博客</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider m-margin-tb-blogFooterLine"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-mini">Copyright@2022-2023 Sora designed by Sorachen</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+</body>
+</html>
+

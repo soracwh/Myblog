@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=" name="viewport">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/static/css/me.css}">
+<!--    动画效果-->
+    <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+    <script src="https://lib.baomitu.com/jquery/3.3.1/jquery.min.js"></script>
+    <title>归档页面</title>
+</head>
+<body>
+<!--导航-->
+<nav th:replace="_fragment :: menu(4)" class="ui inverted attached segment m-padded-tb-mini blog-nav" >
+    <div class="ui sticky">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <h2 class="ui header item" style="color: gold">Sora</h2>
+                <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>首页</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+                <a href="#" class="active m-item item m-mobile-hide"><i class="clone icon"></i>归档</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="linkify icon"></i>小程序</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>关于本站</a>
+                <div class="m-item right item m-mobile-hide m-input">
+                    <div class="ui icon input">
+                        <input type="text" placeholder="Searching....">
+                        <i class="search icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+            <i class="sidebar icon"></i>
+        </a>
+    </div>
+
+</nav>
+<!--中间内容-->
+
+<div class="blog-body">
+    <div class="m-container-tiny m-padded-tb-big">
+       <div class="ui container">
+           <div class="ui top attached segment m-padded-tb-tb2">
+               <div class="ui middle aligned two column grid">
+                   <div class="column">
+                       <h3 class="ui teal header">归档</h3>
+                   </div>
+                   <div class="right aligned column">
+                       共<h3 class="ui header m-inline-block" style="color: gold" th:text="${total}">14</h3>篇
+                   </div>
+               </div>
+           </div>
+           <th:block th:each="item:${blogMap}">
+               <h2 class="ui center aligned header" th:text="${item.key}">2020</h2>
+               <div class="ui vertical fluid menu" >
+                   <a href="#" target="_blank" class="item" th:each="blog:${item.value}" th:href="@{/blog/{id}(id=${blog.id})}">
+                       <span th:text="${blog.title}">SpringBoot的应用学习</span>
+                       <span>
+                            <div class="ui mini teal basic label m-padded-tb-mini m-text-thin" th:text="${#dates.format(blog.updateTime,'MMMdd')}">9月10号</div>
+                            <div class="ui mini yellow basic label m-padded-tb-mini m-text-thin" th:text="${blog.flag}">原创</div>
+                       </span>
+                       <i class="arrow circle right icon"></i>
+                   </a>
+                   <!--/*-->
+                   <a href="#" target="_blank" class="item">
+                       SpringBoot的应用学习
+                       <span>
+                       <div class="ui mini teal basic label m-padded-tb-mini m-text-thin">9月10号</div>
+                       <div class="ui mini yellow basic label m-padded-tb-mini m-text-thin">原创</div>
+                   </span>
+                       <i class="arrow circle right icon"></i>
+                   </a>
+                   <a href="#" target="_blank" class="item">
+                       SpringBoot的应用学习
+                       <span>
+                       <div class="ui mini teal basic label m-padded-tb-mini m-text-thin">9月10号</div>
+                       <div class="ui mini yellow basic label m-padded-tb-mini m-text-thin">原创</div>
+                   </span>
+                       <i class="arrow circle right icon"></i>
+                   </a>
+                   <!--*/-->
+               </div>
+           </th:block>
+
+           <!--/*-->
+           <h2 class="ui center aligned header">2021</h2>
+           <div class="ui vertical fluid menu">
+               <a href="#" target="_blank" class="item">
+                   SpringBoot的应用学习
+                   <span>
+                       <div class="ui mini teal basic label m-padded-tb-mini m-text-thin">9月10号</div>
+                       <div class="ui mini yellow basic label m-padded-tb-mini m-text-thin">原创</div>
+                   </span>
+                   <i class="arrow circle right icon"></i>
+               </a>
+               <a href="#" target="_blank" class="item">
+                   SpringBoot的应用学习
+                   <span>
+                       <div class="ui mini teal basic label m-padded-tb-mini m-text-thin">9月10号</div>
+                       <div class="ui mini yellow basic label m-padded-tb-mini m-text-thin">原创</div>
+                   </span>
+                   <i class="arrow circle right icon"></i>
+               </a>
+               <a href="#" target="_blank" class="item">
+                   SpringBoot的应用学习
+                   <span>
+                       <div class="ui mini teal basic label m-padded-tb-mini m-text-thin">9月10号</div>
+                       <div class="ui mini yellow basic label m-padded-tb-mini m-text-thin">原创</div>
+                   </span>
+                   <i class="arrow circle right icon"></i>
+               </a>
+           </div>
+           <h2 class="ui center aligned header">2022</h2>
+           <div class="ui vertical fluid menu">
+               <a href="#" target="_blank" class="item">
+                   SpringBoot的应用学习
+                   <span>
+                       <div class="ui mini teal basic label m-padded-tb-mini m-text-thin">9月10号</div>
+                       <div class="ui mini yellow basic label m-padded-tb-mini m-text-thin">原创</div>
+                   </span>
+                   <i class="arrow circle right icon"></i>
+               </a>
+               <a href="#" target="_blank" class="item">
+                   SpringBoot的应用学习
+                   <span>
+                       <div class="ui mini teal basic label m-padded-tb-mini m-text-thin">9月10号</div>
+                       <div class="ui mini yellow basic label m-padded-tb-mini m-text-thin">原创</div>
+                   </span>
+                   <i class="arrow circle right icon"></i>
+               </a>
+               <a href="#" target="_blank" class="item">
+                   SpringBoot的应用学习
+                   <span>
+                       <div class="ui mini teal basic label m-padded-tb-mini m-text-thin">9月10号</div>
+                       <div class="ui mini yellow basic label m-padded-tb-mini m-text-thin">原创</div>
+                   </span>
+                   <i class="arrow circle right icon"></i>
+               </a>
+           </div>
+           <!--*/-->
+       </div>
+    </div>
+</div>
+
+<!--底部-->
+<footer th:replace="_fragment :: foot" class="ui inverted vertical segment m-padded-tb-blogFooter" style="background-color: #393D49">
+    <div class="ui center aligned container">
+<!--        分块，16份-->
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="../static/image/wechat.jpg" class="ui rounded image" alt="" style="width: 110px">
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                </div>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Email：sorachenwh@hotmai.com</a>
+                    <a href="#" class="item">QQ:765961732</a>
+                </div>
+            </div>
+            <div class="six wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">这是我的个人博客</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider m-margin-tb-blogFooterLine"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-mini">Copyright@2022-2023 Sorachen designed by Sorachen</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script src="../static/js/home.js"></script>
+<!--按钮后出现m-item标签-->
+<script>
+     $('.menu.toggle').click(function () {
+         $('.m-item').toggleClass('m-mobile-hide');
+    });
+     document.documentElement.style.setProperty('--animate-duration', '1.5s');
+
+     $('.ui.dropdown')
+         .dropdown()
+     ;
+     $('#login').click(function (){
+         $('#login_form').css({"visibility":"visible","width":"300px"});
+     });
+     $('#close_login').click(function (){
+         $('#login_form').css("visibility","hidden");
+     });
+
+     $('.LoginForm').form({
+         fields: {
+             username: {
+                 identifier: 'username',
+                 rules: [{
+                     type: 'empty',
+                     prompt: '请输入用户名'
+                 }]
+             },
+             password: {
+                 identifier: 'password',
+                 rules: [{
+                     type: 'empty',
+                     prompt: '请输入密码'
+                 }]
+             },
+         }
+     });
+</script>
+
+</body>
+</html>

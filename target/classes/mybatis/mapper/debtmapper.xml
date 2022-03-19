@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sora.blog.mapper.DebtMapper">
+
+    <select id="getAllDebt" resultMap="allDebt">
+        select * from blog.t_debt order by user_debtor_id
+    </select>
+    <resultMap id="allDebt" type="Debt">
+        <id property="id" column="id"/>
+        <result property="debt" column="debt"/>
+        <association property="user" column="user_debtor_id" select="debtuser" javaType="User"/>
+    </resultMap>
+
+    <select id="debtuser" resultType="User">
+        select id,nickname from blog.t_user where id = #{user_debtor_id};
+    </select>
+
+<!--    <update id="updateByUserId" parameterType="java.util.List">-->
+<!--        update blog.t_debt set debt =-->
+<!--        <foreach collection="list" item="item" index="index" separator=" " close="end" open="case user_debtor_id">-->
+<!--            when #{item.user.id} then #{item.debt}-->
+<!--        </foreach>-->
+<!--        where user_debtor_id in-->
+<!--        <foreach collection="list" item="item" index="index" separator="," close=")" open="(">-->
+<!--            #{item.user.id}-->
+<!--        </foreach>-->
+<!--    </update>-->
+
+    <update id="updateByUserId" parameterType="Debt">
+        update blog.t_debt set debt = #{debt} where user_debtor_id = #{user.id};
+    </update>
+
+</mapper>

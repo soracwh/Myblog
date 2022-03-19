@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>管理登陆界面</title>
+    <link rel="stylesheet" href="../../static/css/login.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <script src="https://lib.baomitu.com/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('#password').focus(function(){
+                // 密码框获得焦点，追加样式.password
+                $('#owl').addClass('password');
+            }).blur(function(){
+                // 密码框失去焦点，移除样式.password
+                $('#owl').removeClass('password');
+            })
+        })
+    </script>
+
+</head>
+<body>
+<div class="login-box">
+    <div class="owl" id="owl">
+        <div class="hand"></div>
+        <div class="hand hand-r"></div>
+        <div class="arms">
+            <div class="arm"></div>
+            <div class="arm arm-r"></div>
+        </div>
+    </div>
+    <!--thymeleaf-->
+    <form action="#" method="post" th:action="@{/admin/login}" id="loginForm" class="ui form">
+        <div class="input-box">
+            <input type="text" placeholder="账号" id="username" name="username">
+            <input type="password" placeholder="密码" id="password" name="password">
+            <button>login</button>
+        </div>
+        <div class="ui error message"></div>
+        <div class="ui negative mini message" th:unless="${#strings.isEmpty(message)}" th:text="${message}">用户名密码错误</div>
+    </form>
+
+</div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script type="text/javascript">
+    $('#loginForm').form({
+        fields:{
+            title1: {
+                identifier: 'username',
+                rules:[{
+                    type:'empty',
+                    prompt: 'Please enter your username'
+                }]
+            },
+            type: {
+                identifier: 'password',
+                rules:[{
+                    type:'empty',
+                    prompt: 'Please enter your password'
+                }]
+            }
+
+        }
+    });
+</script>
+</html>

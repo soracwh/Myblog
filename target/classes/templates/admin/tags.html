@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=" name="viewport">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.css" />
+<!--    动画效果-->
+    <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+    <script src="https://lib.baomitu.com/jquery/3.3.1/jquery.min.js"></script>
+    <title>标签管理</title>
+</head>
+<body>
+<!--导航-->
+<nav th:replace="admin/_fragment_admin :: menu(3)" class="ui inverted attached segment m-padded-tb-mini blog-nav" >
+    <div class="ui sticky">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <h2 class="ui header item" style="color: gold">后台管理</h2>
+                <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>博客</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+                <a href="#" class="m-item item m-mobile-hide active"><i class="tags icon"></i>标签</a>
+                <div class="m-item right menu m-mobile-hide">
+                    <img class="ui avatar image" src="../../static/image/person.jpg" style="margin-top: 1.25em;margin-right: 0em">
+                    <div class="ui dropdown item">
+                        <div class="text">
+                            SoraCW
+                        </div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a href="#" class="item">修改密码</a>
+                            <a href="#" class="item">注销</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+            <i class="sidebar icon"></i>
+        </a>
+    </div>
+</nav>
+<!--中间内容-->
+
+<div class="blog-body">
+<!--    rightmenu第一层无法实现，可以通过加一层实现右置-->
+<!--    <div class="ui attached pointing teal menu" th:replace="admin/_fragment_admin :: secondMenu(2)">-->
+<!--        <div class="ui container">-->
+<!--            <div class="right menu">-->
+<!--                <a href="#" class="item">发布</a>-->
+<!--                <a href="#" class="active item">博客管理</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+    <!--博客管理-->
+    <div class="ui m-container-tiny m-padded-tb-big">
+       <div class="container">
+           <!--消息提示-->
+           <div class="ui negative mini message" th:unless="${#strings.isEmpty(message)}">
+               <i class="close icon"></i>
+               <div class="" th:text="|提示： ${message}">提示：操作成功！</div>
+           </div>
+           <!--提交表单-->
+           <table class="ui celled table">
+               <thead>
+               <tr>
+                   <th></th>
+                   <th>类型</th>
+                   <th>操作</th>
+               </tr>
+               </thead>
+               <tbody>
+               <tr th:each="tag,iterStat : ${pageInfo.list}">
+                   <td th:text="${iterStat.count}">1</td>
+                   <td th:text="${tag.name}">认知升级</td>
+                   <td>
+                       <a href="#" class="ui mini yellow button" th:href="@{/admin/tags/{id}(id=${tag.id})}">编辑</a>
+                       <a href="#" class=" delete_type ui mini red button" th:href="@{/admin/tags/{id}/delete(id=${tag.id})}">删除</a>
+                   </td>
+               </tr>
+               </tbody>
+               <tfoot>
+               <tr><th colspan="6">
+                   <div class="ui small floated pagination menu">
+                       <a class="icon item" style="" th:href="@{/admin/tags(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}" th:styleappend="${pageInfo.isFirstPage}?'pointer-events: none;'">上一页</a>
+                       <div class="item"><p>第<span th:text="${pageInfo.pageNum}"></span>页</p></div>
+                       <a class="icon item"th:href="@{/admin/tags(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}" th:styleappend="${pageInfo.isLastPage}?'pointer-events: none;'">下一页</a>
+                   </div>
+                   <button id="add_pop" class="ui small right floated yellow basic button" style="margin-top: 0.2em">新增</button>
+               </th>
+               </tr></tfoot>
+           </table>
+       </div>
+    </div>
+
+    <div class="form_1 form_in ui container" id="form_insert">
+        <form class="ui form typeForm" method="post" th:action="@{/admin/tags/insert}">
+            <div class="field" style="background-color: #393D49">
+                <div class="ui grid" style="padding-top: 1em;">
+                    <div class="thirteen wide column">
+                        <h4 style="color: gold;text-align: left;text-indent: 20px !important;">新增标签</h4>
+                    </div>
+                    <div class="three wide column">
+                        <div class="close" id="close_insert" style="font-size: 25px;color: gold">×</div>
+                    </div>
+                </div>
+            </div>
+            <div class="field m-padded-tb-tb m-padded-lr-tb">
+                <input type="text" name="tag" placeholder="输入分类">
+            </div>
+            <div class="field">
+                <button type="submit" class="ui yellow basic mini button">Submit</button>
+            </div>
+        </form>
+    </div>
+
+<!--    发布页面-->
+</div>
+
+<!--底部-->
+<footer class="ui inverted vertical segment m-padded-tb-blogFooter" style="background-color: #393D49">
+    <div class="ui center aligned container">
+<!--        分块，16份-->
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="../../static/image/wechat.jpg" class="ui rounded image" alt="" style="width: 110px">
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                </div>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Email：sorachenwh@hotmai.com</a>
+                    <a href="#" class="item">QQ:765961732</a>
+                </div>
+            </div>
+            <div class="six wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">这是我的个人博客</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider m-margin-tb-blogFooterLine"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-mini">Copyright@2022-2023 Sorachen designed by Sorachen</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script src="../../static/lib/editormd/editormd.min.js"></script>
+<script src="../../static/js/home.js"></script>
+<!--按钮后出现m-item标签-->
+<script>
+     $('.menu.toggle').click(function () {
+         $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+     $('.ui.dropdown')
+         .dropdown()
+     ;
+     <!-- 表单验证前端实现，用name来get元素-->
+     $('.typeForm').form({
+         fields:{
+             types: {
+                 identifier: 'types',
+                 rules:[{
+                     type:'empty',
+                     prompt: 'Please enter a type'
+                 }]
+             },
+         }
+     });
+
+         //新增js
+         $('#add_pop').click(function () {
+             $('#form_insert').css({"visibility":"visible","width":"300px"});
+         });
+
+         $('#close_insert').click(function () {
+             $('#form_insert').css("visibility","hidden");
+         });
+
+
+         $('.delete_type').click(function (){
+             return confirm('确定要删除该分类吗？');
+         });
+
+         $('.message .close')
+             .on('click', function () {
+                 $(this)
+                     .closest('.message')
+                     .transition('fade');
+             });
+</script>
+
+</body>
+</html>

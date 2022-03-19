@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sora.blog.mapper.UserMapper">
+    <select id="queryByUsername" resultType="User">
+        select * from blog.t_user where username = #{username}
+    </select>
+
+    <insert id="insertUser" parameterType="User">
+        insert into blog.t_user (username,password,nickname,create_time,`type`,update_time,email,avatar)
+        values (#{username},#{password},#{nickname},#{createTime},#{type},#{updateTime},#{email},#{avatar})
+<!--        <trim prefix=" (username,password,nickname,create_time,`type`,update_time," suffix=")" suffixOverrides=",">-->
+<!--            <if test="email!=null">-->
+<!--                email,-->
+<!--            </if>-->
+<!--            <if test="avatar!=null">-->
+<!--                avatar,-->
+<!--            </if>-->
+<!--        </trim>-->
+<!--        <trim prefix=" values (#{username},#{password},#{nickname},#{createTime},#{type},#{updateTime}," suffix=")" suffixOverrides=",">-->
+<!--            <if test="email!=null">-->
+<!--                #{email},-->
+<!--            </if>-->
+<!--            <if test="avatar!=null">-->
+<!--                #{avatar},-->
+<!--            </if>-->
+<!--        </trim>-->
+    </insert>
+</mapper>
