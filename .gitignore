@@ -1,5 +1,6 @@
 # Compiled class file
 *.class
+# idea配置
 .idea/
 
 # Log file
